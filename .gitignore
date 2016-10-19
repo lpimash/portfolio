@@ -1,3 +1,5 @@
 /.c9/
 README.md
 php.ini
+/test/
+php_errors.log
