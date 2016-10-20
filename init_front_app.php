@@ -30,7 +30,7 @@ $path = $url['path'];
  
 if (isset($urlMap[$path])) {  // On construit la fonction à appeler.
     
-    $fonction_a_appeler = $urlMap[$path] . 'Page'; // exemple "accueilPage()"   
+    $fonction_a_appeler = $urlMap[$path] . 'Page'; // exemple "accueil" . "Page" => appelera la fonction accueilPage()
     
     if(function_exists($fonction_a_appeler)){
         call_user_func($fonction_a_appeler, $templates); // On appelle (execute) la fonction
@@ -38,7 +38,7 @@ if (isset($urlMap[$path])) {  // On construit la fonction à appeler.
         throw new Exception("la fonction $fonction_a_appeler n'est pas définie.");
     }
     
-} else {                      // La page n'existe pas
+} else {                      // La page n'existe pas, on renvoi une erreur 404
 
     header("HTTP/1.0 404 Not Found");
     echo $templates->render('pages/404');
