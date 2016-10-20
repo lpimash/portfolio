@@ -23,8 +23,10 @@ $db = new PDO('mysql:host=127.0.0.1;dbname=c9;port=3306;charset=utf8', 'o_revoll
    ======================================================================================== 
 */
 $urlMap = [
-    '/' => 'accueil',
-    '/oliv' => 'test'
+    '/'             => 'accueil',
+    '/oliv'         => 'test',
+    '/realisations' => 'realisations',
+    '/realisation'  => 'realisation'
 ];
 
 $url = parse_url($_SERVER[REQUEST_URI]);
@@ -38,14 +40,13 @@ if (isset($urlMap[$path])) {  // On construit la fonction à appeler.
     if(function_exists($fonction_a_appeler)){
         
         call_user_func($fonction_a_appeler, [ // On appelle (execute) la fonction
-            'templates'     => $templates,
-            'menu_courant'  => $menu
+            'templates'     => $templates,    // On lui passe le système de template,
+            'db'           => $db,           // la base de donnée,
+            'menu_courant'  => $menu          // et le menu courant
         ]);
         
     }else{
-        
         throw new Exception("la fonction $fonction_a_appeler n'est pas définie.");
-        
     }
     
 } else {                      // La page n'existe pas, on renvoi une erreur 404

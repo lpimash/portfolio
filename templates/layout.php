@@ -23,6 +23,7 @@
       <ul class="nav navbar-nav">
         <li class="<?php if($menu == 'accueil') echo "active" ?>"><a href="/">Accueil</a></li>
         <li class="<?php if($menu == 'test') echo "active" ?>"><a href="/oliv">Test</a></li>
+        <li class="<?php if($menu == 'realisations') echo "active" ?>"><a href="/realisations">Réalisations</a></li>
       </ul>
     </div>
       

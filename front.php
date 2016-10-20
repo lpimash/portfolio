@@ -18,3 +18,33 @@ function testPage(array $args){
     ]);
     
 }
+
+function realisationsPage(array $args){
+
+    $sql = 'SELECT * FROM realisation';
+    $statement = $args['db']->prepare($sql);
+    $statement->execute();
+    $realisations = $statement->fetchAll();
+    
+    echo $args['templates']->render('pages/realisations', [
+        'menu' => $args['menu_courant'],
+        'realisations' => $realisations
+    ]);
+    
+}
+
+function realisationPage(array $args){
+
+    $sql = 'SELECT * FROM realisation WHERE id = :id';
+    $statement = $args['db']->prepare($sql);
+    $statement->bindValue(':id', (int) $_GET['id'] );
+    $statement->execute();
+    $realisation = $statement->fetch(); // récupère le premier enregistrement
+
+    echo $args['templates']->render('pages/realisation', [
+        'menu' => $args['menu_courant'],
+        'realisation' => $realisation
+    ]);
+    
+}
+
