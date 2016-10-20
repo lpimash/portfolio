@@ -5,7 +5,7 @@ require __DIR__ . DIRECTORY_SEPARATOR . 'autoloading.php';
 // Initialisation templates php
 $templates = new League\Plates\Engine(__DIR__ . DIRECTORY_SEPARATOR . 'templates');
 
-// Affiche des beaux messages de debug
+// Affiche de beaux messages d'erreurs
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
@@ -13,12 +13,14 @@ $whoops->register();
 // Connexion à la base de donnée
 $db = new PDO('mysql:host=127.0.0.1;dbname=c9;port=3306;charset=utf8', 'o_revollat', '');
 
-// Les routes (URL) possibles et quel fonction correspondante doit etre executée
-/*
-Par exemple pour '/test' => 'essai' traduit le fait que si on accéde à l'URL
-http://portfolio.mondomaine.net/test alors c'est la fonction essaiPage() qui sera appelée.
-on construit le nom de cette fonction en prenant la valeur associée dans le tableau (ici 'essai') 
-en y collant 'Page' ainsi on appelle la fonction essaiPage()
+/* 
+   ========================================================================================
+    Les routes (URL) possibles et quel fonction correspondante doit etre executée.
+    Par exemple pour '/test' => 'essai' traduit le fait que si on accéde à l'URL
+    http://portfolio.mondomaine.net/test alors c'est la fonction essaiPage() qui sera appelée.
+    on construit le nom de cette fonction en prenant la valeur associée dans le tableau (ici 'essai') 
+    en y collant 'Page' ainsi on appelle la fonction essaiPage()
+   ======================================================================================== 
 */
 $urlMap = [
     '/' => 'accueil',
@@ -30,12 +32,20 @@ $path = $url['path'];
  
 if (isset($urlMap[$path])) {  // On construit la fonction à appeler.
     
-    $fonction_a_appeler = $urlMap[$path] . 'Page'; // exemple "accueil" . "Page" => appelera la fonction accueilPage()
+    $menu = $urlMap[$path];
+    $fonction_a_appeler = $menu . 'Page'; // exemple "accueil" . "Page" => appelera la fonction accueilPage()
     
     if(function_exists($fonction_a_appeler)){
-        call_user_func($fonction_a_appeler, $templates); // On appelle (execute) la fonction
+        
+        call_user_func($fonction_a_appeler, [ // On appelle (execute) la fonction
+            'templates'     => $templates,
+            'menu_courant'  => $menu
+        ]);
+        
     }else{
+        
         throw new Exception("la fonction $fonction_a_appeler n'est pas définie.");
+        
     }
     
 } else {                      // La page n'existe pas, on renvoi une erreur 404

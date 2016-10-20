@@ -21,8 +21,8 @@
       
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Accueil</a></li>
-        <li><a href="/oliv">Test</a></li>
+        <li class="<?php if($menu == 'accueil') echo "active" ?>"><a href="/">Accueil</a></li>
+        <li class="<?php if($menu == 'test') echo "active" ?>"><a href="/oliv">Test</a></li>
       </ul>
     </div>
       
