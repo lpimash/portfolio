@@ -29,7 +29,7 @@ $urlMap = [
     '/realisation'  => 'realisation'
 ];
 
-$url = parse_url($_SERVER[REQUEST_URI]);
+$url = parse_url($_SERVER['REQUEST_URI']);
 $path = $url['path'];
  
 if (isset($urlMap[$path])) {  // On construit la fonction à appeler.
